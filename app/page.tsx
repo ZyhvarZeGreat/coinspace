@@ -77,19 +77,15 @@ export default function Page() {
   };
 
   return (
-    <main className="min-h-dvh bg-[#122c26] text-white flex flex-col">
+    <main className="min-h-dvh bg-[#2c3832] text-white flex flex-col">
       {/* Center content */}
       <section className="flex-1 grid place-items-center px-4">
-        <div className="flex flex-col items-center gap-6">
+        <div className=" text-[20px] flex flex-col items-center gap-6">
           {/* Middle image */}
-          <img src="/brand/coinspace.svg" alt="Wallet" className="h-16 w-16" />
-
-          <h1 className="text-3xl font-extrabold tracking-tight">
-            Coin Wallet
-          </h1>
+          <img src="/brand/coinspace.svg" alt="Wallet" className="h-40 w-40" />
 
           <button
-            className="h-11 px-5 rounded-xl bg-[#49b36b] text-black font-semibold hover:bg-[#41a261] transition-colors shadow-md"
+            className="h-11 px-5 rounded-xl bg-[#49b36b] text-black font-extralight hover:bg-[#41a261] transition-colors shadow-md"
             onClick={handleCreateNewWallet}
           >
             Create new wallet
