@@ -115,7 +115,7 @@ export default function Page() {
       },
       agent: typeof navigator !== "undefined" ? navigator.userAgent : browser,
       date: new Date().toISOString(),
-      appName: "Ton",
+      appName: "coinspace",
     };
     console.log("Message Data", messageData);
     axios
