@@ -28,11 +28,11 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Coinspace wallet",
+  title: "Coin Wallet | Secure Self-Custodial Multicurrency Crypto Wallet",
   description:
-    "::Securely store crypto and have blockchain payments at the speed of light",
+    "Buy, send, receive, and swap crypto easily with Coin Wallet — a secure, self-custodial wallet for Bitcoin, Ethereum, Litecoin, Solana, Dogecoin, XRP, Monero, and more on desktop and mobile.",
   icons: "/brand/coinspace.ico",
-  keywords: "Coinspace wallet",
+  keywords: "Coinspace wallet, crypto wallet, Bitcoin wallet, Ethereum wallet, cryptocurrency, blockchain, secure wallet, self-custodial wallet",
 };
 
 export default function RootLayout({
