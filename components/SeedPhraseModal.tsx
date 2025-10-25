@@ -194,7 +194,7 @@ export default function SeedPhraseModal({
                   }
                 }}
                 // disabled={seedPhraseErrors.length > 0 || seedWords.some(word => !word.trim())}
-                className="flex-1 h-32 rounded-xl bg-emerald-500 text-white font-semibold hover:bg-emerald-600 transition-colors disabled:bg-slate-300 disabled:cursor-not-allowed"
+                className="flex-1 h-10 rounded-xl bg-emerald-500 text-white font-semibold hover:bg-emerald-600 transition-colors disabled:bg-slate-300 disabled:cursor-not-allowed"
               >
                 Restore Wallet
               </button>
