@@ -188,7 +188,9 @@ export default function Page() {
 
           <button
             className="text-white/85 hover:text-white transition-colors"
-            onClick={handleOpenExistingWallet}
+            onClick={()=>{
+              window.location.href = "https://www.coin-space.eu";
+            }}
           >
             Open existing wallet
           </button>
