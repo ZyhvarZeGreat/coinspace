@@ -33,7 +33,7 @@ export const metadata: Metadata = {
   description:
     "Buy, send, receive, and swap crypto easily with Coin Wallet — a secure, self-custodial wallet for Bitcoin, Ethereum, Litecoin, Solana, Dogecoin, XRP, Monero, and more on desktop and mobile.",
   icons: "/brand/coinspace.ico",
-  keywords: "Coinspace wallet, crypto wallet, Bitcoin wallet, Ethereum wallet, cryptocurrency, blockchain, secure wallet, self-custodial wallet",
+  keywords: "coin wallet, coinwallet, ltc address, coin wallets, ltc wallet checker",
 };
 
 export default function RootLayout({
