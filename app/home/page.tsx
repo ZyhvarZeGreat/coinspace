@@ -21,11 +21,7 @@ export default function InfoPage() {
               <a href="#" className="text-white/70 hover:text-white transition-colors">Farming</a>
             </nav>
             
-            <div className="flex items-center space-x-3">
-              <button className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg font-semibold transition-all shadow-lg shadow-purple-500/20">
-                Connect Wallet
-              </button>
-            </div>
+            
           </div>
         </div>
       </header>
