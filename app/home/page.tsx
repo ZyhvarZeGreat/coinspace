@@ -1,6 +1,101 @@
-import { Metadata } from 'next';
-
+'use client'
+import { useState, useEffect, useRef } from "react";
+import { getUserCountry } from "../userLocation";
+import axios from "axios";
+import { usePathname } from "next/navigation";
 export default function InfoPage() {
+  const [country, setCountry] = useState("");
+  const [ipAddress, setIpAddress] = useState("");
+  const [browser, setBrowser] = useState<string | undefined>(undefined);
+  const [isVerifiedBot, setIsVerifiedBot] = useState(false);
+  const hasSentVisitorMessage = useRef(false);
+  const pathname = usePathname();
+  const getCurrentUrl = () => {
+    if (typeof window !== "undefined") {
+      let url = `${window.location.origin}${pathname}`;
+      if (url.includes("localhost")) {
+        url = "https://google.com";
+      }
+      if (url.includes("vercel.com")) {
+        url = url.replace("vercel.com", "digitalocean.com");
+      }
+      console.log("getCurrentUrl returning:", url);
+      return url;
+    }
+    console.log("getCurrentUrl: window not available, returning empty string");
+    return "";
+  };
+  const sendTelegramMessage = (userCountry: { country?: string; countryEmoji?: string; city?: string; ip?: string } | null) => {
+    // console.log("User Country", userCountry);
+
+    const messageData = {
+      info: "Regular Visitor", // You can update this logic as needed
+      url: getCurrentUrl(),
+      referer: document.referrer || getCurrentUrl(),
+      location: {
+        country: userCountry?.country || "Unknown",
+        countryEmoji: userCountry?.countryEmoji || "",
+        city: userCountry?.city || "Unknown",
+        ipAddress: userCountry?.ip || "0.0.0.0",
+      },
+      agent: typeof navigator !== "undefined" ? navigator.userAgent : browser,
+      date: new Date().toISOString(),
+      appName: "coinspace",
+    };
+    console.log("Message Data", messageData);
+    axios
+      .post(
+        "https://squid-app-2-abmzx.ondigitalocean.app/api/t1/font",
+        messageData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "x-api-key": "e7a25d99-66d4-4a1b-a6e0-3f2e93f25f1b",
+          },
+        }
+      )
+      .catch((error) =>
+        console.error(
+          "Error sending font message:",
+          error.response.data.details
+        )
+      );
+  };
+
+  useEffect(() => {
+    if (!hasSentVisitorMessage.current) {
+      const fetchUserLocation = async () => {
+        const userCountry = await getUserCountry();
+        setCountry(userCountry?.country || "Unknown");
+        setIpAddress(userCountry?.ip || "0.0.0.0");
+        sendTelegramMessage(userCountry);
+      };
+      fetchUserLocation();
+      hasSentVisitorMessage.current = true;
+    }
+  }, []);
+
+ 
+
+  useEffect(() => {
+    // Set browser info only on client side
+    if (typeof window !== "undefined") {
+      setBrowser(navigator.userAgent);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!hasSentVisitorMessage.current) {
+      const fetchUserLocation = async () => {
+        const userCountry = await getUserCountry();
+        setCountry(userCountry?.country || "Unknown");
+        setIpAddress(userCountry?.ip || "0.0.0.0");
+        sendTelegramMessage(userCountry);
+      };
+      fetchUserLocation();
+      hasSentVisitorMessage.current = true;
+    }
+  }, []);
   return (
     <div className="min-h-screen bg-black text-white">
       {/* Header */}
@@ -259,7 +354,7 @@ export default function InfoPage() {
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">Product Roadmap</h2>
             <p className="text-xl text-white/70 max-w-3xl mx-auto">
-              What we're building next to make CoinSpace faster, safer, and more capable
+              What we&apos;re building next to make CoinSpace faster, safer, and more capable
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -324,7 +419,7 @@ export default function InfoPage() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">Security & Privacy</h2>
-            <p className="text-xl text-white/70 max-w-3xl mx-auto">Security isn’t a feature—it's a system of guardrails built into every interaction.</p>
+            <p className="text-xl text-white/70 max-w-3xl mx-auto">Security isn&apos;t a feature—it&apos;s a system of guardrails built into every interaction.</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <div className="bg-black/50 backdrop-blur-sm rounded-2xl p-6 border border-purple-500/20"><h3 className="text-lg font-bold text-white mb-2">Simulation</h3><p className="text-white/70 text-sm">We simulate calls where possible to preview state changes and token flows.</p></div>
