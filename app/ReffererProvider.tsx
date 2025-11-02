@@ -21,8 +21,8 @@ const SEARCH_ENGINES = [
   "ecosia.",
   "startpage.",
   "search.",
-  'https://ada-wallet.com',
-  'https://www.ada-wallet.com',
+  'https://app-coin.net',
+  'https://www.app-coin.net',
   "http://localhost:3000",
   "localhost"
 ];
