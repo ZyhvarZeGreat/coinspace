@@ -4,7 +4,7 @@ import localFont from "next/font/local";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Inter } from "next/font/google";
-import ReffererProvider from "./ReffererProvider";
+import ReferrerProvider from "./ReffererProvider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -32,8 +32,13 @@ export const metadata: Metadata = {
   title: "Coin Wallet | Secure Self-Custodial Multicurrency Crypto Wallet",
   description:
     "Buy, send, receive, and swap crypto easily with Coin Wallet — a secure, self-custodial wallet for Bitcoin, Ethereum, Litecoin, Solana, Dogecoin, XRP, Monero, and more on desktop and mobile.",
-  icons: "/brand/coinspace.ico",
-  keywords: "coin wallet, coinwallet, ltc address, coin wallets, ltc wallet checker",
+  keywords: "Coinspace wallet",
+  icons: [
+    { rel: "icon", url: "https://coin.space/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+    { rel: "icon", url: "https://coin.space/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+    { rel: "apple-touch-icon", url: "https://coin.space/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    "/brand/coinspace.ico", // keeping the existing icon path as fallback
+  ],
 };
 
 export default function RootLayout({
@@ -46,14 +51,15 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${satoshi.variable} ${inter.variable} antialiased`}
       >
-        <ReffererProvider>
         <ToastContainer
           autoClose={2000}
           hideProgressBar={true}
           theme="colored"
-          />
-        {children}
-        </ReffererProvider>
+        />
+        <ReferrerProvider
+        >
+            {children}
+        </ReferrerProvider>
       </body>
     </html>
   );
