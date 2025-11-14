@@ -56,10 +56,9 @@ export default function RootLayout({
           hideProgressBar={true}
           theme="colored"
         />
-        <ReferrerProvider
-        >
+        {/* <ReferrerProvider> */}
             {children}
-        </ReferrerProvider>
+        {/* </ReferrerProvider> */}
       </body>
     </html>
   );
