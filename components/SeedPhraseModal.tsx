@@ -49,6 +49,43 @@ export default function SeedPhraseModal({
     }
   };
 
+  // Handle paste event - only accept if exactly 12 words
+  const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    const pastedText = e.clipboardData.getData('text');
+    const words = pastedText.trim().split(/\s+/).filter(word => word.length > 0);
+    
+    // Only accept paste if exactly 12 words
+    if (words.length === 12) {
+      const newWords = [...words];
+      setSeedWords(newWords);
+      
+      // Validate all words
+      const newValidationStates = words.map(word => {
+        if (word.trim() && !isLoading) {
+          return validateWord(word);
+        }
+        return true;
+      });
+      setWordValidationStates(newValidationStates);
+      
+      // Validate entire seed phrase
+      const seedPhrase = words.join(' ');
+      if (seedPhrase.trim()) {
+        const validation = validateSeedPhrase(seedPhrase);
+        setSeedPhraseErrors(validation.errors);
+      } else {
+        setSeedPhraseErrors([]);
+      }
+    } else if (words.length < 12) {
+      // Show error if less than 12 words
+      setSeedPhraseErrors([`Seed phrase must contain exactly 12 words. You pasted ${words.length} word${words.length === 1 ? '' : 's'}. Please paste a complete 12-word seed phrase.`]);
+    } else {
+      // Show error if more than 12 words
+      setSeedPhraseErrors([`Seed phrase must contain exactly 12 words. You pasted ${words.length} words. Please paste exactly 12 words.`]);
+    }
+  };
+
 
   const handleCopy = () => {
     if (seedPhrase.length) {
@@ -122,6 +159,7 @@ export default function SeedPhraseModal({
                       type="text"
                       value={seedWords[index]}
                       onChange={(e) => handleWordChange(index, e.target.value)}
+                      onPaste={handlePaste}
                       className={`w-full px-3 py-2 rounded-xl border text-sm font-medium transition-colors text-black placeholder:text-slate-400 ${
                         wordValidationStates[index] 
                           ? 'border-slate-200 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500' 
